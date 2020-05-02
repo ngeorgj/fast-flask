@@ -33,6 +33,10 @@ class FastFlask:
     |     |       [admin]
     |     |       |      admin.html
     |     |       |
+    |     |       [auth]
+    |     |       |      login.html
+    |     |       |      register.html
+    |     |       |
     |     |       base.html
     |     |
     |     [static]
@@ -53,7 +57,7 @@ class FastFlask:
 
     """
     # [app.py]
-    f_app = """
+    f_app = """ #
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
@@ -87,7 +91,17 @@ def index():
 @app.route('/admin')
 def admin():
     return render_template('admin/admin.html')
+    
+# BASIC ROUTE TO AUTH/LOGIN.HTML
+@app.route('/login')
+def login():
+    return render_template('auth/login.html')
 
+# BASIC ROUTE TO AUTH/REGISTER.HTML
+@app.route('/register')
+def register():
+    return render_template('auth/register.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)
         """
@@ -96,6 +110,75 @@ if __name__ == '__main__':
     f_models = """
 
         """
+
+
+    # HTML
+    login_page_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
+</head>
+<body>
+<div class="login-form">
+    <form action="/login" method="post">
+        <h2 class="text-center">Log in</h2>       
+        <div class="form-group">
+            <input name="username" type="text" class="form-control" placeholder="Username" required="required">
+        </div>
+        <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Password" required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </div>
+        <div class="clearfix">
+            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+            <a href="#" class="pull-right">Forgot Password?</a>
+        </div>        
+    </form>
+    <p class="text-center"><a href="#">Create Account</a></p>
+</div>
+</body>
+</html>  
+    """
+
+    register_page_html = ""
+
+    # CSS
+    auth_css = """.login-form {
+    width: 340px;
+    margin: 50px auto;
+}
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
+}       
+            """
 
     def __init__(self):
         self.os = ""
@@ -214,7 +297,6 @@ if __name__ == '__main__':
 </html>    
         """)
         f.close()
-        print(f'[{filename}] CREATED.')
 
     def html_inherits_base(self, filename):
         os.system(f'fsutil file createnew {filename} 2000')
@@ -230,6 +312,18 @@ if __name__ == '__main__':
 {% block body %}
 {% endblock %}
         """)
+
+    def login_html(self, filename='login.html'):
+        os.system(f'fsutil file createnew {filename} 2000')
+        file = os.getcwd() + "\\" + filename
+        print(file)
+        f = open(file, 'a')
+        f.write(self.login_page_html)
+        f.close()
+        pass
+
+    def register_html(self):
+        pass
 
     # Command Line
     def line(self, what):
@@ -252,14 +346,21 @@ if __name__ == '__main__':
         self.line('cd ' + self.root)
 
     # File Creation
-    def new_file(self, name, size):
+    def new_empty_file(self, name, size):
         self.line(f'fsutil file createnew {name} {size}')
 
-    def create_py(self, filename, content):
-        self.new_file(filename, 5000)
+    def create_file(self, filename, content):
+        self.new_empty_file(filename, 5000)
         file = os.getcwd() + "\\" + filename
         f = open(file, 'a')
         f.write(content)
+        f.close()
+
+    def write_to_file(self, filename, what):
+        file = os.getcwd() + "\\" + filename
+        f = open(file, 'r+')
+        f.truncate(0)
+        f.write(what)
         f.close()
 
     # Test Server
@@ -302,9 +403,9 @@ if __name__ == '__main__':
         """
         self.create_folder('templates')
         self.create_folder('static')
-        self.new_file('database.db', 8000)
-        self.create_py('app.py', self.f_app)
-        self.create_py('models.py', self.f_models)
+        self.new_empty_file('database.db', 8000)
+        self.create_file('app.py', self.f_app)
+        self.create_file('models.py', self.f_models)
 
     def create_templates(self):
         """
@@ -316,18 +417,23 @@ if __name__ == '__main__':
                         index.html
             +  [admin]
                         admin.html
+            +  [auth]
+                        login.html
+                        register.html
             +  base.html
 
         """
         self.go_to_folder('templates')
         self.base_html('base.html')
+        self.create_folder('auth')
         self.create_folder('index')
         self.create_folder('admin')
         self.go_to_folder('templates/index')
         self.html_inherits_base('index.html')
-        self.go_to_folder('templates')
         self.go_to_folder('templates/admin')
         self.html_inherits_base('admin.html')
+        self.go_to_folder('templates/auth')
+        self.login_html()
         self.go_to_folder()
 
     def create_static(self):
@@ -338,17 +444,21 @@ if __name__ == '__main__':
           +  [Static]
             +  [css]
                         custom.css
+                        auth.css
             +  [js]
                         custom.js
 
         """
+
         self.go_to_folder('static')
         self.create_folder('css')
         self.create_folder('js')
         self.go_to_folder('static/css')
-        self.new_file('custom.css', 1000)
+        self.new_empty_file('custom.css', 1000)
+        self.new_empty_file('auth.css', 1000)
+        self.write_to_file('auth.css', self.auth_css)
         self.go_to_folder('static/js')
-        self.new_file('custom.js', 1000)
+        self.new_empty_file('custom.js', 1000)
         self.go_to_folder()  # Goes back to Root
 
 
