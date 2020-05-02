@@ -12,7 +12,7 @@ It has an simple configurable db file named 'database.db' (sqlite3 as default, n
 
 First Step > Throw the file inside your preferable folder, my example folder will be "Example".
 </p>
-<p>
+
 + Example/
     + templates/
         + index/
@@ -28,12 +28,13 @@ First Step > Throw the file inside your preferable folder, my example folder wil
     + app.py
     + models.py
     + database.db
-</p>
+
     
 <h2> Dependencies </h2>
 <p>
 You have to pip install some libraries and having <a href="https://www.python.org/">Python</a> installed.
 </p>
+
 <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> <br>
 `pip install flask` <br>
 This will allow you to work with flask (obviously)<br><br>
@@ -98,9 +99,9 @@ if __name__ == '__main__':
 If you enjoyed this and it helps you somehow, please leave follow me here on github and spread the word haha!<br>
 </p>
 <h3> Donate </h3>
-```
-| <b>BTC</b>   36vmLnP61kSgsQcDLpkKDfashea2wTgkr1          | <br>
-| <b>ETH</b>   0x1Ff8aaB40005eaB0e70AB87b5225f200AF1A3615  | <br>
-| <b>LTC</b>   MRQkoS1kH11PNWwV3YYL5DJn3WZ1yejFAe          |
-```
+
+<b>BTC</b>   36vmLnP61kSgsQcDLpkKDfashea2wTgkr1          | <br>
+<b>ETH</b>   0x1Ff8aaB40005eaB0e70AB87b5225f200AF1A3615  | <br>
+<b>LTC</b>   MRQkoS1kH11PNWwV3YYL5DJn3WZ1yejFAe          |
+
 
