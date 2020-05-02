@@ -189,7 +189,7 @@ if __name__ == '__main__':
 
 
     <div class="container">
-    <!-- DELETE BELOW THIS -->
+    <!-- DELETE BELOW THIS LINE-->
 
         <br>
         <h1> If you can read this, you are up to go!</h1>
