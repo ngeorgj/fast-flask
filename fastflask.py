@@ -56,6 +56,7 @@ class FastFlask:
     Hope you like it!
 
     """
+
     # [app.py]
     f_app = """ #
 from flask import Flask, render_template, url_for, request, redirect
@@ -111,7 +112,6 @@ if __name__ == '__main__':
 
         """
 
-
     # HTML
     login_page_html = """
 <!DOCTYPE html>
@@ -148,13 +148,54 @@ if __name__ == '__main__':
             <a href="#" class="pull-right">Forgot Password?</a>
         </div>        
     </form>
-    <p class="text-center"><a href="#">Create Account</a></p>
+    <p class="text-center"><a href="/register">Create Account</a></p>
 </div>
 </body>
 </html>  
     """
 
-    register_page_html = ""
+    register_page_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
+</head>
+<body>
+<div class="login-form">
+    <form action="/register" method="post">
+        <h2 class="text-center">Register</h2>       
+        <div class="form-group">
+            <input name="username" type="text" class="form-control" placeholder="Username" required="required">
+        </div>
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Email" required="required">
+        </div>
+        <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Password" required="required">
+        </div>
+        <div class="form-group">
+            <input name="confirm_password" type="password" class="form-control" placeholder="Confirm Password" required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+        </div>      
+    </form>
+    <p class="text-center"><a href="/login">Already registered? Clich here to Login.</a></p>
+</div>
+</body>
+</html>  
+    """
 
     # CSS
     auth_css = """.login-form {
@@ -220,7 +261,7 @@ if __name__ == '__main__':
     <!-- basic navbar [DELETE IF NOT USEFUL] -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="#">MyTemplate</a>
+        <a class="navbar-brand" href="/">FastFlask</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -237,7 +278,7 @@ if __name__ == '__main__':
               <a class="nav-link" href="#">Another</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+              <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">DropMenu</a>
               <div class="dropdown-menu" aria-labelledby="dropdown07">
                 <a class="dropdown-item" href="#">Put</a>
                 <a class="dropdown-item" href="#">Links</a>
@@ -246,7 +287,8 @@ if __name__ == '__main__':
             </li>
           </ul>
           <form class="form-inline my-2 my-md-0">
-            <input class="form-control" type="text" placeholder="search" aria-label="Search">
+            <a href="/login" type="button" class="btn btn-warning">Login</a>
+            <a href="/register" type="button" class="btn btn-info" style="margin-left: 10px;">Register</a>
           </form>
         </div>
       </div>
@@ -272,18 +314,21 @@ if __name__ == '__main__':
 
 
     <div class="container">
-    <!-- DELETE BELOW THIS LINE-->
-
+    
+        <!-- DELETE BELOW THIS LINE-->
         <br>
-        <h1> If you can read this, you are up to go!</h1>
-        <br>
-        <h4> I hope this save you some time! </h4>
-        <br>
-        <h4> If you like this, please follow me on github <a style="color: red; text-decoration: none;" href="https://github.com/ngeorgj">@ngeorgj</a></h4>
-        <br>
-        <h4> In case of bugs, compliments or comments email to <b>ngj.netrunner@gmail.com</b></h4>
-
-    <!-- END DELETE HERE -->
+    <div class="jumbotron">
+      <h1 class="display-4">If you can read this, you are up to go!</h1>
+      <p class="lead">I hope this save you some time! </p>
+      <hr class="my-4">
+      <p>If you like this, please follow me on github <a style="color: red; text-decoration: none;" href="https://github.com/ngeorgj">@ngeorgj</a></p>
+      <p>In case of bugs, compliments or comments email to <b>ngj.netrunner@gmail.com</b></p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Enjoy</a>
+      </p>
+    </div>
+        <!-- END DELETE HERE -->
+        
     </div>
 
     <!-- Optional JavaScript -->
@@ -322,7 +367,13 @@ if __name__ == '__main__':
         f.close()
         pass
 
-    def register_html(self):
+    def register_html(self, filename='register.html'):
+        os.system(f'fsutil file createnew {filename} 1000')
+        file = os.getcwd() + "\\" + filename
+        print(file)
+        f = open(file, 'a')
+        f.write(self.register_page_html)
+        f.close()
         pass
 
     # Command Line
@@ -366,8 +417,6 @@ if __name__ == '__main__':
     # Test Server
     def test_server(self):
         # ASKS USER IF IT WANTS TO TEST
-        os.system('cls')
-        print(" Flask Minified Project Created Successfully\n")
         choice = input(' Do you want to run the server for testing purposes [y/n]? > ')
 
         yes = ['yes', 'YES', 'Yes', 'y', 'ye']
@@ -433,6 +482,7 @@ if __name__ == '__main__':
         self.go_to_folder('templates/admin')
         self.html_inherits_base('admin.html')
         self.go_to_folder('templates/auth')
+        self.register_html()
         self.login_html()
         self.go_to_folder()
 
@@ -460,6 +510,8 @@ if __name__ == '__main__':
         self.go_to_folder('static/js')
         self.new_empty_file('custom.js', 1000)
         self.go_to_folder()  # Goes back to Root
+        os.system('cls')
+        print(" Flask Minified Project Created Successfully\n")
 
 
 # Running FastFlask()
