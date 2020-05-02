@@ -4,7 +4,7 @@ import os, time
 
 root = os.getcwd()
 
-# FILE INFORMATION [APP, MODELS,
+# FILE INFORMATION [APP, MODELS, ETC]
 
 # [app.py] File
 basic_app = """ 
