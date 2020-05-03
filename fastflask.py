@@ -7,6 +7,7 @@
 import os
 import time
 import sys
+import urllib.request
 
 available_os = {
     'AIX': 'aix',
@@ -237,6 +238,9 @@ if __name__ == '__main__':
             self.os = available_os['macOS']
         self.root = os.getcwd()
         print("My OS is: " + self.os)
+
+    def get_code_from_github(self, source):
+        code = urllib.request.urlopen('')
 
     # HTML Basics
     def base_html(self, filename):
