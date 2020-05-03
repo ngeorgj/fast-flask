@@ -126,7 +126,7 @@ class FastFlask:
         code = str(code, encoding='utf-8')
         self.create_file(filename, code)
 
-    # Test Server
+    # Ask about running test server
     def test_server(self):
         """
         Last question to user, asking if it wants to test the server 127.0.0.1:5000/
