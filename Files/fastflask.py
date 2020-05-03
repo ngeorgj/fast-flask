@@ -17,8 +17,6 @@ available_os = {
 
 
 class FastFlask:
-
-    github = 'https://github.com/ngeorgj/fast-flask/raw/master/origin'
     """
     FAST FLASK SCRIPT
     Flask made easy (yes, more than it already is).
@@ -528,104 +526,12 @@ if __name__ == '__main__':
         os.system('cls')
         print(" Flask Minified Project Created Successfully\n")
 
-    # Test Functions 101 ===============================================  T E S T I N G
-
-    def tcreate_root(self):
-        """
-        Application goes
-
-        [root]
-          +  [Templates]
-          +  [Static]
-          +  app.py
-          +  models.py
-          +  database.db
-
-        """
-        self.create_folder('templates')
-        self.create_folder('static')
-
-        self.new_empty_file('database.db', 8000)
-
-        self.get_code_from_github('app.py', self.github + 'app.py')
-        self.get_code_from_github('models.py', self.github + 'models.py')
-
-    def tcreate_templates(self):
-        """
-        Template Folder Files
-
-        [root]
-          +  [Templates]
-            +  [index]
-                        index.html
-            +  [admin]
-                        admin.html
-            +  [auth]
-                        login.html
-                        register.html
-            +  base.html
-
-        """
-        self.go_to_folder('templates')
-        self.get_code_from_github('base.html', self.github + 'templates/base.html')
-
-        self.create_folder('auth')
-        self.create_folder('index')
-        self.create_folder('admin')
-
-        self.go_to_folder('templates/index')
-        self.get_code_from_github('index.html', self.github + 'templates/index/index.html')
-
-        self.go_to_folder('templates/admin')
-        self.get_code_from_github('admin.html', self.github + 'templates/admin/admin.html')
-
-        self.go_to_folder('templates/auth')
-        self.get_code_from_github('login.html', self.github + 'templates/auth/login.html')
-        self.get_code_from_github('register.html', self.github + 'templates/auth/register.html')
-
-        self.go_to_folder()
-
-    def tcreate_static(self):
-        """
-        Static Folder Files
-
-        [root]
-          +  [Static]
-            +  [css]
-                        custom.css
-                        auth.css
-            +  [js]
-                        custom.js
-
-        """
-
-        self.go_to_folder('static')
-        self.create_folder('css')
-        self.create_folder('js')
-
-        self.go_to_folder('static/css')
-        self.get_code_from_github('custom.css', self.github + 'static/css/custom.css')
-        self.get_code_from_github('auth.css', self.github + 'static/css/auth.css')
-
-        self.go_to_folder('static/js')
-        self.get_code_from_github('custom.js', self.github + 'static/js/custom.js')
-
-        self.go_to_folder()  # Goes back to Root
-        os.system('cls')
-        print(" Flask Minified Project Created Successfully\n")
-
-    def run(self):
-        self.tcreate_root()
-        self.tcreate_templates()
-        self.tcreate_static()
-
 
 # Running FastFlask()
+
 fastflask = FastFlask()
-fastflask.run()
 
-
-
+fastflask.get_code_from_github('testfile.html', "https://github.com/ngeorgj/fast-flask/raw/master/temp/templates/base.py")
 
 #fastflask.create_root()
 #fastflask.create_templates()
