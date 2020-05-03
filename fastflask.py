@@ -18,7 +18,7 @@ available_os = {
 
 class FastFlask:
 
-    github = 'https://github.com/ngeorgj/fast-flask/raw/master/origin'
+    github = 'https://github.com/ngeorgj/fast-flask/raw/master/Origin'
     """
     FAST FLASK SCRIPT
     Flask made easy (yes, more than it already is).
