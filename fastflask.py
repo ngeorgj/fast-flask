@@ -83,7 +83,6 @@ class FastFlask:
 
     def create_folder(self, folder_name):
         os.system(f'mkdir {folder_name}')
-        print(f'[{folder_name}/] CREATED.')
 
     # Navigation
     def go_to_folder(self, dir_name=""):
@@ -106,7 +105,6 @@ class FastFlask:
         self.new_empty_file(filename, 5000)
         file = os.getcwd() + "\\" + filename
         f = open(file, 'a')
-        f.truncate(0)
         f.write(content)
         f.close()
 
@@ -117,13 +115,22 @@ class FastFlask:
         f.write(what)
         f.close()
 
+    def read_file(self, filename):  # For debug purposes only...
+        file = os.getcwd() + "\\" + filename
+        file = open(file, 'r')
+        file = file.read()
+        print(file)
+
     def get_code_from_github(self, filename, source):
         """
         This will get data from the "Origin" Folder inside the main repository.
+        *This part was tricky.
         """
         code = urllib.request.urlopen(source)
         code = code.read()
-        code = str(code, encoding='utf-8')
+        code = str(code, encoding='utf-8')  # MAJOR BUG in the project already.
+        code = code.replace('\n', '')  # replaces whitespaces with nothing
+        code = code.replace('\n\n', '\n')  # replaces double whitespaces with one whitespace and this solves a BIG BUG.
         self.create_file(filename, code)
 
     # Ask about running test server
@@ -255,6 +262,7 @@ class FastFlask:
         self.create_templates()
         self.create_static()
         print(" Flask Minified Project Created Successfully\n")
+        self.test_server()
 
 
 # Let's Run
