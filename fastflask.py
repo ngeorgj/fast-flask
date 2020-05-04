@@ -8,6 +8,7 @@ import os
 import time
 import sys
 import urllib.request
+import threading
 
 
 class FastFlask:
@@ -76,6 +77,13 @@ class FastFlask:
             self.os = self.available_os['macOS']
         self.root = os.getcwd()
         print("User Operational System: " + self.os)
+
+    thread_list = []
+
+    def thread_add(self, function):
+        thread = threading.Thread(target=function)
+        self.thread_list.append(thread)
+        thread.start()
 
     # Command Line
     def line(self, what):
@@ -215,7 +223,7 @@ class FastFlask:
 
         # Enters 'templates' folder and creates 1 file and 3 folders [base.html, auth, index, admin]
         self.go_to_folder('templates')
-        self.get_code_from_github('base.html', self.github + 'templates/base.py')
+        self.get_html_from_github('base.html', self.github + 'templates/base.py')
         self.create_folder('auth')
         self.create_folder('index')
         self.create_folder('admin')
@@ -270,9 +278,9 @@ class FastFlask:
 
     # Run FastFlask Application
     def run(self):
-        self.create_root()
-        self.create_templates()
-        self.create_static()
+        self.thread_add(self.create_root())
+        self.thread_add(self.create_templates())
+        self.thread_add(self.create_static())
         print(" Flask Minified Project Created Successfully\n")
         self.test_server()
 
