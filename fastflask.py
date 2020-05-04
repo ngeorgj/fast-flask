@@ -133,6 +133,18 @@ class FastFlask:
         code = code.replace('\n\n', '\n')  # replaces double whitespaces with one whitespace and this solves a BIG BUG.
         self.create_file(filename, code)
 
+    def get_html_from_github(self, filename, source):
+        """
+        This will get data from the "Origin" Folder inside the main repository.
+        *This part was tricky.
+        """
+        code = urllib.request.urlopen(source)
+        code = code.read()
+        code = str(code, encoding='utf-8')  # MAJOR BUG in the project already.
+        # code = code.replace('\n', '')
+        # code = code.replace('\n\n', '\n')
+        self.create_file(filename, code)
+
     # Ask about running test server
     def test_server(self):
         """
@@ -203,23 +215,23 @@ class FastFlask:
 
         # Enters 'templates' folder and creates 1 file and 3 folders [base.html, auth, index, admin]
         self.go_to_folder('templates')
-        self.get_code_from_github('base.html', self.github + 'templates/base.html')
+        self.get_code_from_github('base.html', self.github + 'templates/base.py')
         self.create_folder('auth')
         self.create_folder('index')
         self.create_folder('admin')
 
         # Enters 'templates/index' folder and creates 1 file [index.html]
         self.go_to_folder('templates/index')
-        self.get_code_from_github('index.html', self.github + 'templates/index/index.html')
+        self.get_html_from_github('index.html', self.github + 'templates/index/index.py')
 
         # Enters 'templates/admin' folder and creates 1 file [admin.html]
         self.go_to_folder('templates/admin')
-        self.get_code_from_github('admin.html', self.github + 'templates/admin/admin.html')
+        self.get_html_from_github('admin.html', self.github + 'templates/admin/admin.py')
 
         # Enters 'templates/auth' folder and creates 2 files [login.html, register.html]
         self.go_to_folder('templates/auth')
-        self.get_code_from_github('login.html', self.github + 'templates/auth/login.html')
-        self.get_code_from_github('register.html', self.github + 'templates/auth/register.html')
+        self.get_html_from_github('login.html', self.github + 'templates/auth/login.py')
+        self.get_html_from_github('register.html', self.github + 'templates/auth/register.py')
 
         # Goes back to Root folder
         self.go_to_folder()
@@ -245,12 +257,12 @@ class FastFlask:
 
         # Enters 'static/css' folder and creates 2 files [custom.css, auth.css]
         self.go_to_folder('static/css')
-        self.get_code_from_github('custom.css', self.github + 'static/css/custom.css')
-        self.get_code_from_github('auth.css', self.github + 'static/css/auth.css')
+        self.get_html_from_github('custom.css', self.github + 'static/css/custom.py')
+        self.get_html_from_github('auth.css', self.github + 'static/css/auth.py')
 
         # Enters 'static/js' folder and creates 1 file [custom.js]
         self.go_to_folder('static/js')
-        self.get_code_from_github('custom.js', self.github + 'static/js/custom.js')
+        self.get_html_from_github('custom.js', self.github + 'static/js/custom.py')
 
         # Goes back to root folder
         self.go_to_folder()
