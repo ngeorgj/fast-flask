@@ -113,6 +113,7 @@ class FastFlask:
         self.new_empty_file(filename, 5000)
         file = os.getcwd() + "\\" + filename
         f = open(file, 'a')
+        f.truncate(0)
         f.write(content)
         f.close()
 

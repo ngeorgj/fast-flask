@@ -1,3 +1,7 @@
+* {
+    font-family: monospace;
+
+}
 
 .login-form {
     width: 340px;
@@ -19,5 +23,6 @@
 .btn {        
     font-size: 15px;
     font-weight: bold;
-}       
+}
+
             
