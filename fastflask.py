@@ -198,12 +198,12 @@ class FastFlask:
         self.create_folder('templates')
         self.create_folder('static')
 
-        # Creates the database file
-        self.new_empty_file('database.db', 8000)
-
         # Creates 'app.py' and 'models.py'
         self.get_code_from_github('app.py', self.github + 'app.py')
         self.get_code_from_github('models.py', self.github + 'models.py')
+
+        # Creates 'database.db' file from source
+        self.get_code_from_github('database.db', 'create_db.py')
 
     def create_templates(self):
         """

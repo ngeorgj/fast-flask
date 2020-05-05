@@ -44,13 +44,13 @@ def admin():
 
 
 # BASIC ROUTE TO AUTH/LOGIN.HTML
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template('auth/login.html')
 
 
 # BASIC ROUTE TO AUTH/REGISTER.HTML
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     return render_template('auth/register.html')
 
