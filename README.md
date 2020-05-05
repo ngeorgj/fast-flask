@@ -13,21 +13,31 @@ It has an simple configurable db file named 'database.db' (sqlite3 as default, n
 First Step > Throw the file inside your preferable folder, my example folder will be "Example".
 </p>
 
-+ Example/
-    + templates/
-        + index/
-            + index.html
-        + admin/
-            + admin.html
-        + base.html
-    + static/
-        + css/
-            + custom.css
-        + js/
-            + custom.js
-    + app.py
-    + models.py
-    + database.db
+    [root]
+    |     [templates]
+    |     |       [index]
+    |     |       |      index.html
+    |     |       |
+    |     |       [admin]
+    |     |       |      admin.html
+    |     |       |
+    |     |       [auth]
+    |     |       |      login.html
+    |     |       |      register.html
+    |     |       |
+    |     |       base.html
+    |     |
+    |     [static]
+    |     |       [css]
+    |     |       |      custom.css
+    |     |       |
+    |     |       [js]
+    |     |       |      custom.js
+    |     |       |
+    |     app.py
+    |     models.py
+    |     database.db
+    |
 
     
 <h2> Dependencies </h2>
@@ -47,7 +57,7 @@ This will allow you to work with databases via SQLAlchemy<br><br>
 <h4> See the 'app.py' file below </h4>
 
 ```python
-
+# Fast Flask @ https://github.com/ngeorgj/fast-flask
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
@@ -62,8 +72,8 @@ db_file = 'database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_file
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_USERNAME'] = 'admin'
-app.config['SQLALCHEMY_PASSWORD'] = 'admin'
-app.config['SESSION_COOKIE_NAME'] = 'C00KIE1337'
+app.config['SQLALCHEMY_PASSWORD'] = 'fast-flask'
+app.config['SESSION_COOKIE_NAME'] = 'fastflaskisDOPE'
 
 # SECRET KEY [ CHANGE ]
 app.secret_key = 'CHANGE.THIS.ASAP'
@@ -72,15 +82,30 @@ app.secret_key = 'CHANGE.THIS.ASAP'
 app.config['AWS_SECRET_KEY'] = 'YOUR.KEY.HERE'
 app.config['AWS_KEY_ID'] = 'KEY.ID.HERE'
 
+
 # BASIC ROUTE TO INDEX/INDEX.HTML
 @app.route('/')
 def index():
     return render_template('index/index.html')
 
+
 # BASIC ROUTE TO ADMIN/ADMIN.HTML
 @app.route('/admin')
 def admin():
     return render_template('admin/admin.html')
+
+
+# BASIC ROUTE TO AUTH/LOGIN.HTML
+@app.route('/login')
+def login():
+    return render_template('auth/login.html')
+
+
+# BASIC ROUTE TO AUTH/REGISTER.HTML
+@app.route('/register')
+def register():
+    return render_template('auth/register.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -91,9 +116,18 @@ if __name__ == '__main__':
 1 - Create a folder as the "Example" above. <br>
 2 - Throw your 'fastflask.py' file inside it. <br>
 3 - Execute the file [fastflask.py] <br>
+![Alt Text](https://giphy.com/gifs/python-flask-fast-KG635T1tfby9nHFf81)
 4 - Choose if you want to server test it (Recommended) <br>
 5 - You can close the website and edit your files and start developing with this base. <br>
 </p>
+
+<h1> Next Steps </h2>
+<p>
++ Adding auth system and integration to db for user login.
++ Make a little movie on the basic usability of the app.
++ GET SOME VISIBILITY FOR THIS APP! HAHA
+</p>
+
 <h1> Final Part </h2>
 <p>
 If you enjoyed this and it helps you somehow, please leave follow me here on github and spread the word haha!<br>
