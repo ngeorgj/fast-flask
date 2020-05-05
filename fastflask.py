@@ -203,7 +203,9 @@ class FastFlask:
         self.get_code_from_github('models.py', self.github + 'models.py')
 
         # Creates 'database.db' file from source
-        self.get_code_from_github('database.db', 'create_db.py')
+        self.get_code_from_github('create_db.py', self.github + 'create_db.py')
+        self.line('create_db.py')
+        self.line('del create_db.py')
 
     def create_templates(self):
         """
