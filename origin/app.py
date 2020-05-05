@@ -1,12 +1,11 @@
+
 # Fast Flask @ https://github.com/ngeorgj/fast-flask
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from models import User
 
 # YOUR APPLICATION
 app = Flask(__name__)
-
-# YOUR DATABASE [SQLITE3]
-db = SQLAlchemy(app)
 db_file = 'database.db'
 
 # FLASK CONFIGURATION
@@ -16,19 +15,15 @@ app.config['SQLALCHEMY_USERNAME'] = 'admin'
 app.config['SQLALCHEMY_PASSWORD'] = 'fast-flask'
 app.config['SESSION_COOKIE_NAME'] = 'fastflaskisDOPE'
 
+# YOUR DATABASE [SQLITE3]
+db = SQLAlchemy(app)
+
 # SECRET KEY [ CHANGE ]
 app.secret_key = 'CHANGE.THIS.ASAP'
 
 # AWS
 app.config['AWS_SECRET_KEY'] = 'YOUR.KEY.HERE'
 app.config['AWS_KEY_ID'] = 'KEY.ID.HERE'
-
-
-# MODELS
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True)
 
 
 # BASIC ROUTE TO INDEX/INDEX.HTML
@@ -52,6 +47,20 @@ def login():
 # BASIC ROUTE TO AUTH/REGISTER.HTML
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        cpass = request.form['cpassword']
+
+        if password != cpass:
+            flash('Passwords not match. Try again.')
+            redirect('/register')
+
+        new_user = User(name=name, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
     return render_template('auth/register.html')
 
 
