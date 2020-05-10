@@ -1,1 +1,1 @@
-import sqlite3sqlite3.connect('database.db')from models import Userfrom app import dbdb.create_all()quit()
+import sqlite3sqlite3.connect('database.db')quit()
